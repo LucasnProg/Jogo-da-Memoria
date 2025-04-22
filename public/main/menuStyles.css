@@ -1,0 +1,114 @@
+body {
+    margin: 0 auto;
+    font-family: Helvetica, Arial, sans-serif;
+    height: 100vh;
+    text-align: center;
+    overflow-y: hidden;
+  
+    background: #93d4ed;
+    background: linear-gradient(90deg,rgba(147, 212, 237, 1) 0%, rgba(87, 199, 133, 1) 50%, rgba(237, 221, 83, 1) 100%);;
+  }
+  
+.main-div {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5%;
+    padding: 20px;
+    width: 50%; 
+}
+
+.title-game{
+    margin-bottom: 2%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 3rem;
+    font-weight: 800;
+    text-align: center;
+    background: linear-gradient(90deg, #7182ce, #2b2c2c);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.menu {
+    background-color: rgba(0, 0, 0, 0.8);
+    position: relative;
+    padding: 30px;
+    border-radius: 15px;
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    text-align: left;
+}
+
+.menu h1 {
+    margin-bottom: 20px;
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    color: #fff;
+}
+
+label {
+    display: block;
+    margin: 10px 0 5px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    text-align: left;
+}
+
+input {
+    padding: 12px;
+    border: 1px solid #ddd;
+    outline: none;
+    width: 100%;
+    font-size: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    transition: border-color 0.3s ease;
+}
+
+input:focus {
+    border-color: #4e9fff;
+}
+
+button {
+    border: none;
+    padding: 12px;
+    width: 100%;
+    border-radius: 10px;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: deepskyblue;
+}
+
+p {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: #ccc;
+}
+
+a {
+    color: dodgerblue;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+#jogar-botao{
+    background-color: rgba(87, 199, 133, 1);
+}
+
+#ranking-botao{
+    background-color: rgb(85, 129, 146);
+}
+
+#sair-botao{
+    background-color: brown;
+}
