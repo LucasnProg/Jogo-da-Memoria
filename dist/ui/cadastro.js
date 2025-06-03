@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             else if (response.status === 201) {
                 alert('Cadastro realizado com sucesso!');
-                setTimeout(() => { window.location.href = '../index.html'; }, 200);
+                setTimeout(() => { window.location.href = '../index.html'; }, 300);
             }
         }
         catch (error) {

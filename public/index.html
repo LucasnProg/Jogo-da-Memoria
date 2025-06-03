@@ -10,16 +10,27 @@
     <div class="main-div">
     <h1 class="title-game">JOGO DA MEMÓRIA</h1>
         <form class="form-login">
-            <h1>Login</h1>
-            <label for="email">Digite seu email:</label>
-            <input type="email" id="email" name="email" required />
-            <label for="senha">Digite sua senha:</label>
-            <input type="password" id="senha" name="senha" required />
+            <h1>OLÁ, SEJA BEM VINDO!</h1>
+            <label for="nick">Insira seu Nickname:</label>
+            <input type="text" id="nick" name="nick" required />
+            <label for="tag">Digite uma tag:</label>
+            <input type="text" id="tag" name="tag" required maxlength="5"/>
             <button type="submit">Jogar</button>
             <br><br>
-            <p>Ainda não tem uma conta? <a href="cadastro/cadastro.html">Faça seu cadastro</a></p>
         </form>
+        
     </div>
   <script src="../dist/ui/login.js"></script>
+  <script>
+    const input = document.getElementById('tag');
+
+    input.addEventListener('input', () => {
+        let tag = input.value.replace(/^#/, '');
+        
+        tag = tag.slice(0, 4);
+
+        input.value = '#' + tag;
+    });
+    </script>
 </body>
 </html>

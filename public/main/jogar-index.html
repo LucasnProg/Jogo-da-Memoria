@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <title>Jogo da Memória</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="jogarStyles.css" rel="stylesheet">
+</head>
+<body>
+    <div class="main-container">
+      <h1 class="title-game">JOGO DA MEMÓRIA</h1>
+  
+      <div class="main-div">
+        <div class="menu">
+          <h1>Selecione o modo de jogo:</h1>
+          <div class="button-grid-2" id="modo-botoes">
+            <button type="button" id="competitivo-botao" title="Os jogadores se revezam, buscando formar o maior número de grupos de cartas iguais, com base na dificuldade." value="Competitivo">Competitivo</button>
+            <button type="button" id="cooperativo-botao" title="Os jogadores jogam juntos, revezando as jogadas e tentando revelar todas as cartas dentro do tempo limite." value="Cooperativo">Cooperativo</button>
+          </div>
+        </div>
+  
+        <div class="menu">
+          <h1>Selecione a dificuldade da partida:</h1>
+          <div class="button-grid" id="dificuldade-botoes">
+            <button type="button" id="facil-botao" value="facil" title="As cartas serão agrupadas em pares(2 iguais)">Fácil</button>
+            <button type="button" id="medio-botao" value="medio" title="As cartas serão agrupadas em trincas(3 iguais)">Médio</button>
+            <button type="button" id="dificil-botao" value="dificil" title="As cartas serão agrupadas em quadras(4 iguais)">Difícil</button>
+            <button type="button" id="extremo-botao" value="extremo" title="As cartas não possuem grupoes definidos, existem pares, trincas e quadras.">Extremo</button>
+          </div>
+        </div>
+      </div>
+  
+      <div class="footer-buttons">
+        <button type="button" id="voltar-botao" title="Retornar à tela anterior">Voltar</button>
+        <button type="button" id="continuar-botao" title="Prosseguir para o jogo">Continuar</button>
+      </div>
+    </div>
+  </body>
+  <script>
+    document.getElementById('voltar-botao').addEventListener('click', function() {
+      window.location.href="main-menu.html";
+    });
+  </script>
+  <script src="../../dist/ui/menuPreJogo.js"></script>
+</html>

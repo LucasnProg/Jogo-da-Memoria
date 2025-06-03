@@ -1,0 +1,113 @@
+body {
+    font-family: Helvetica, Arial, sans-serif;
+    height: 100vh;
+    text-align: center;
+    overflow-y: hidden;
+
+    background: #93d4ed;
+    background: linear-gradient(90deg,rgba(147, 212, 237, 1) 0%, rgba(87, 199, 133, 1) 50%, rgba(237, 221, 83, 1) 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.main-div {
+    padding: 20px;
+    width: 100%; 
+    display: flex;
+    justify-content: center; 
+    align-items: flex-start;      
+    gap: 40px; 
+    flex-wrap: wrap;
+}
+
+.title-game{
+    margin-bottom: 2rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 3rem;
+    font-weight: 800;
+    background: linear-gradient(90deg, #7182ce, #2b2c2c);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.menu {
+    background-color: rgba(0, 0, 0, 0.8);
+    position: relative;
+    padding: 30px;
+    border-radius: 15px;
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    text-align: left;
+    height: auto;
+    width: 600px;
+}
+
+.menu h1 {
+    margin-bottom: 20px;
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    color: #fff;
+}
+
+
+button {
+    border: none;
+    padding: 12px;
+    width: 100%;
+    border-radius: 10px;
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+    cursor: pointer;
+    background-color: #bbffd670;
+    transition: background-color 0.3s ease;
+}
+button.selected {
+    background-color: rgb(59, 145, 77);
+    color: white;
+    border: 2px solid #012507;
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+  
+.button-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.button-grid-2 {
+    display: grid;
+    gap: 15px;
+}
+
+button:hover {
+    background-color: rgb(59, 145, 77);
+    transform: scale(1.05);
+}
+
+.footer-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+
+#voltar-botao,
+#continuar-botao {
+    width: 200px;
+    background: rgb(66, 89, 165);
+}
+
+#voltar-botao:hover,
+#continuar-botao:hover {
+    background: rgb(0, 0, 83);
+    transform: scale(1.05);
+}

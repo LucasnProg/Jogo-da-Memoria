@@ -46,31 +46,6 @@ body {
     text-align: center;
     color: #fff;
 }
-
-label {
-    display: block;
-    margin: 10px 0 5px;
-    font-size: 1rem;
-    font-weight: 600;
-    color: #fff;
-    text-align: left;
-}
-
-input {
-    padding: 12px;
-    border: 1px solid #ddd;
-    outline: none;
-    width: 100%;
-    font-size: 15px;
-    margin-bottom: 20px;
-    border-radius: 8px;
-    transition: border-color 0.3s ease;
-}
-
-input:focus {
-    border-color: #4e9fff;
-}
-
 button {
     border: none;
     padding: 12px;
@@ -84,21 +59,6 @@ button {
 
 button:hover {
     background-color: deepskyblue;
-}
-
-p {
-    margin-top: 10px;
-    font-size: 0.9rem;
-    color: #ccc;
-}
-
-a {
-    color: dodgerblue;
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
 }
 
 #jogar-botao{

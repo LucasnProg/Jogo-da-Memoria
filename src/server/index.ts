@@ -1,17 +1,20 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
+import path from 'path';
 
 
-import { iniciarDataBase, verificarJogadorExiste, adicionarJogador, verificarLogin, verificarEmailExiste } from '../database/dbManager';
+import { iniciarDataBase, verificarJogadorExiste, iniciarJogador} from '../database/dbManager';
 
 const app = express();
 const PORT = 3000;
 
 app.use(cors());
 app.use(express.json());
+
+
 iniciarDataBase();
 
-
+/*
 app.post('/cadastro', (req: Request , res: Response)=> { 
   const { nome, email, senha } = req.body;
 
@@ -21,18 +24,17 @@ app.post('/cadastro', (req: Request , res: Response)=> {
 
   adicionarJogador(nome, email, senha);
   return res.status(201).json({ message: 'Cadastro realizado com sucesso!' });
-});
+});*/
 
-app.post('/login', (req: Request , res: Response)=> { 
-  const {email, senha } = req.body;
+app.post('/iniciar', (req: Request , res: Response)=> { 
+  const {nick, tag} = req.body;
 
-  if (!verificarEmailExiste(email)) {
-    return res.status(409).json({ message: 'Jogador não existe' });
-  } else if(!verificarLogin(email, senha)){
-    return res.status(407).json({message : 'Senha ou email incorretos'})
+  if (verificarJogadorExiste(nick, tag)) {
+    return res.status(409).json({ message: 'Essa tag, não está mais disponível para esse nome de jogador!' });
+  } else{
+    iniciarJogador(nick, tag);
+    return res.status(201).json({ message: 'nick, inserido com sucesso!' });
   }
-
-  return res.status(201).json({ message: 'Login realizado com sucesso!' });
 });
 
 app.listen(PORT, () => {
