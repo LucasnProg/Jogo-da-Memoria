@@ -8,11 +8,22 @@ import { iniciarDataBase, verificarJogadorExiste, iniciarJogador} from '../datab
 const app = express();
 const PORT = 3000;
 
-app.use(cors());
-app.use(express.json());
-
-
 iniciarDataBase();
+
+app.use(express.json());
+app.use(cors());
+
+const publicPath = path.join(__dirname, '../../public');
+const distPath = path.join(__dirname, '../../dist');
+
+
+app.use('/dist', express.static(distPath));
+app.use(express.static(publicPath));
+
+
+app.get('/', (req: Request, res: Response) => {
+  res.sendFile(path.join(publicPath, 'index.html'));
+});
 
 /*
 app.post('/cadastro', (req: Request , res: Response)=> { 

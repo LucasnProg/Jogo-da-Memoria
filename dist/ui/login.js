@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 function contatarServidor(nick, tag) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const response = yield fetch('http://localhost:3000/iniciar', {
+            const response = yield fetch('/iniciar', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ nick, tag })
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const login = yield contatarServidor(nick, tag);
         if (login) {
             alert('Seja bem vindo!');
-            window.location.href = "../../public/main/main-menu.html";
+            window.location.href = "/main/main-menu.html";
         }
         else {
             alert('Essa tag, não está mais disponível para esse nome de jogador!');

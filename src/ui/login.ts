@@ -1,6 +1,6 @@
 async function contatarServidor(nick:string, tag:string):Promise<boolean>{
   try {
-        const response = await fetch('http://localhost:3000/iniciar', {
+        const response = await fetch('/iniciar', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({nick, tag})
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const login = await contatarServidor(nick,tag);
       if (login){
         alert('Seja bem vindo!');
-        window.location.href="../../public/main/main-menu.html";
+        window.location.href="/main/main-menu.html";
       } else {
         alert('Essa tag, não está mais disponível para esse nome de jogador!');
       }
