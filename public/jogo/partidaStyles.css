@@ -1,140 +1,215 @@
 body {
-    margin: 0 auto;
-    font-family: Helvetica, Arial, sans-serif;
-    height: 100vh;
-    text-align: center;
-    overflow-y: hidden;
-  
-    background: #93d4ed;
-    background: linear-gradient(90deg,rgba(147, 212, 237, 1) 0%, rgba(87, 199, 133, 1) 50%, rgba(237, 221, 83, 1) 100%);;
-  }
-  
-.main-div {
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 1%;
-    padding: 20px;
-    width: auto;
-    height: auto; 
+  margin: 0 auto;
+  font-family: Helvetica, Arial, sans-serif;
+  height: 100vh;
+  text-align: center;
+  overflow-y: hidden;
+
+  background: #93d4ed;
+  background: linear-gradient(90deg, rgba(147, 212, 237, 1) 0%, rgba(87, 199, 133, 1) 50%, rgba(237, 221, 83, 1) 100%);
+  ;
 }
 
-.title-game{
-    margin-bottom: 2%;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 3rem;
-    font-weight: 800;
-    text-align: center;
-    background: linear-gradient(90deg, #7182ce, #2b2c2c);
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+.main-div {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 1%;
+  padding: 20px;
+  width: auto;
+  height: auto;
+}
+
+.title-game {
+  margin-bottom: 2%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 3rem;
+  font-weight: 800;
+  text-align: center;
+  background: linear-gradient(90deg, #7182ce, #2b2c2c);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .cartas {
-    background-color: rgba(0, 0, 0, 0.8);
-    position: relative;
-    padding: 20px 40px;
-    border-radius: 15px;
-    color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    text-align: left;
-    height: 480px;
-    display: flex;
-    flex-direction: column;
+  background-color: rgba(0, 0, 0, 0.8);
+  position: relative;
+  padding: 20px 40px;
+  border-radius: 15px;
+  color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  text-align: left;
+  height: 480px;
+  display: flex;
+  flex-direction: column;
+}
+
+.cartas-topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#voltar-botao {
+  font-size: 1.2rem;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  box-shadow: 0 2px 6px rgba(255, 255, 255, 0.3);
+  transition: all 0.2s ease;
+}
+
+.dica-botao {
+  opacity: 0.5;
+  pointer-events: none;
+  border: 2px solid transparent;
+  transition: all 0.5s ease;
+  font-size: 1.2rem;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  color: #fff;
+  transition: all 0.2s ease;
+  background-color: #272227;
+}
+
+.dica-botao.ativo {
+  opacity: 1;
+  pointer-events: auto;
+  border: 2px solid gold;
+  background-color: #ccc23b;
+  animation: pulse 1.2s ease-in-out infinite, colorChange 3s ease-in-out infinite;
+  transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+  border-radius: 8px;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(218, 165, 32, 0.4);
   }
-  
-  .cartas-topo {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  #voltar-botao {
-    font-size: 1.2rem;
-    padding: 10px 20px;
-    border-radius: 8px;
-    border: none;
-    box-shadow: 0 2px 6px rgba(255, 255, 255, 0.3);
-    transition: all 0.2s ease;
-  }
-  
-  #voltar-botao:hover {
-    background-color: #ddd;
+  50% {
     transform: scale(1.05);
+    box-shadow: 0 0 15px 5px rgba(218, 165, 32, 0.6);
   }
-  
-  .cronometro {
-    font-size: 1.5rem;
-    font-weight: bold;
-    font-family: 'Courier New', Courier, monospace;
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(218, 165, 32, 0.4);
   }
-  .jogadas {
-    font-size: 1.5rem;
-    font-weight: bold;
-    font-family: 'Courier New', Courier, monospace;
+}
+
+@keyframes colorChange {
+  0% {
+    background-color: #bfa93c;
+    box-shadow: inset 0 0 10px rgba(191, 169, 60, 0.3);
   }
-  .conjuntoCertos {
-    font-size: 1.5rem;
-    font-weight: bold;
-    font-family: 'Courier New', Courier, monospace;
+  50% {
+    background-color: #f5e27e;
+    box-shadow: inset 0 0 20px rgba(245, 226, 126, 0.6);
+  }
+  100% {
+    background-color: #d1c04c;
+    box-shadow: inset 0 0 10px rgba(209, 192, 76, 0.3);
+  }
+}
+
+
+#voltar-botao:hover {
+  background-color: #ddd;
+  transform: scale(1.05);
+}
+
+.cronometro {
+  font-size: 1.5rem;
+  font-weight: bold;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.cronometro.acabando {
+  color: red;
+  animation: piscar 1s infinite;
+}
+
+@keyframes piscar {
+
+  0%,
+  100% {
+    opacity: 1;
   }
 
-  .divisor-cartas {
-    margin: 10px 0;
-    border: none;
-    border-top: 1px solid rgba(255, 255, 255, 0.3);
+  50% {
+    opacity: 0;
   }
-  
-  .cartas-jogo {
-    display: grid;
-    grid-template-columns: repeat(9, 1fr); 
-    grid-template-rows: repeat(3, auto);   
-    gap: 1%;
-    justify-content: center;
-    align-content: center;
-    height: 100%;
-    padding: 10px;
-  }
-  
+}
 
-  .carta {
-    width: 80px;
-    height: 120px;
-    perspective: 1000px;
-  }
-  
-  .carta-inner {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    transform-style: preserve-3d;
-    transition: transform 0.6s;
-  }
-  
-  .carta.virada .carta-inner {
-    transform: rotateY(180deg);
-  }
-  .carta.fixada .carta-inner {
+.jogadas {
+  font-size: 1.5rem;
+  font-weight: bold;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.conjuntoCertos {
+  font-size: 1.5rem;
+  font-weight: bold;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.divisor-cartas {
+  margin: 10px 0;
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.cartas-jogo {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  grid-template-rows: repeat(3, auto);
+  gap: 1%;
+  justify-content: center;
+  align-content: center;
+  height: 100%;
+  padding: 10px;
+}
+
+
+.carta {
+  width: 80px;
+  height: 120px;
+  perspective: 1000px;
+}
+
+.carta-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s;
+}
+
+.carta.virada .carta-inner {
   transform: rotateY(180deg);
 }
 
-  .carta-frente,
-  .carta-costas {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    backface-visibility: hidden;
-    border-radius: 10px;
-    background-size: cover;
-    background-position: center;
-  }
-  
-  .carta-costas {
-    background-image: url("../src/carta-traseira.png"); 
-  }
-  
-  .carta-frente {
-    background-color: #fff;
-    transform: rotateY(180deg);
-  }
-  
+.carta.fixada .carta-inner {
+  transform: rotateY(180deg);
+}
+
+.carta-frente,
+.carta-costas {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  backface-visibility: hidden;
+  border-radius: 10px;
+  background-size: cover;
+  background-position: center;
+}
+
+.carta-costas {
+  background-image: url("../src/carta-traseira.png");
+}
+
+.carta-frente {
+  background-color: #fff;
+  transform: rotateY(180deg);
+}

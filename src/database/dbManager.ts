@@ -11,6 +11,8 @@ function iniciarDataBase():void{
               modo TEXT,
               duracao TEXT,
               pontuacao INTEGER,
+              data TEXT,
+              hora TEXT,
               PRIMARY KEY(tag_jogador, nome_jogador)
             );
           `).run();
@@ -20,9 +22,9 @@ function iniciarJogador(nome:string, tag:string):void{
     db.prepare('INSERT INTO partidas(nome_jogador, tag_jogador) VALUES (?,?)').run(nome, tag);
 }
 
-function registrarPartida(nick: string, dificuldade: string, modo: string, pontos: number): void {
-    db.prepare('UPDATE partidas SET dificuldade = ?, modo = ?, pontuacao = ? WHERE nome_jogador = ?')
-      .run(dificuldade, modo, pontos, nick);
+function registrarPartida(nick: string, dificuldade: string, modo: string, pontos: number, duracao: string, data:string, hora: string): void {
+    db.prepare('UPDATE partidas SET dificuldade = ?, modo = ?, duracao = ?,  pontuacao = ?, data= ?, hora = ? WHERE nome_jogador = ?')
+      .run(dificuldade, modo, duracao, pontos,data, hora, nick);
 }
 
 function consultarPartidas(): Partida[] {
