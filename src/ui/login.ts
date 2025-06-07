@@ -31,6 +31,8 @@ document.addEventListener('DOMContentLoaded', () => {
       
       const login = await contatarServidor(nick,tag);
       if (login){
+        localStorage.setItem('nick', nick);
+        localStorage.setItem('tag', tag);
         alert('Seja bem vindo!');
         window.location.href="/main/main-menu.html";
       } else {

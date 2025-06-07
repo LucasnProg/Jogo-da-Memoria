@@ -1,0 +1,98 @@
+body {
+  margin: 0 auto;
+  font-family: Helvetica, Arial, sans-serif;
+  height: 100vh;
+  text-align: center;
+  overflow-y: hidden;
+
+  background: #93d4ed;
+  background: linear-gradient(90deg, rgba(147, 212, 237, 1) 0%, rgba(87, 199, 133, 1) 50%, rgba(237, 221, 83, 1) 100%);
+  ;
+}
+
+.main-div {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 1%;
+  padding: 20px;
+  width: auto;
+  height: auto;
+}
+
+.title-game {
+  margin-bottom: 2%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 3rem;
+  font-weight: 800;
+  text-align: center;
+  background: linear-gradient(90deg, #7182ce, #2b2c2c);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.container {
+  background-color: rgba(0, 0, 0, 0.8);
+  position: relative;
+  padding: 20px 40px;
+  border-radius: 15px;
+  color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  text-align: left;
+  height: 480px;
+  display: flex;
+  flex-direction: column;
+}
+
+.container-topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#voltar-botao {
+  font-size: 1.2rem;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  box-shadow: 0 2px 6px rgba(255, 255, 255, 0.3);
+  transition: all 0.2s ease;
+}
+
+
+#voltar-botao:hover {
+  background-color: #ddd;
+  transform: scale(1.05);
+}
+
+
+.divisor {
+  margin: 10px 0;
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.ranking {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 40px;
+  overflow-y: auto;
+  padding: 10px;
+  height: 100%;
+}
+
+.tabela-container {
+  flex: 1;
+  min-width: 45%;
+}
+
+.tabela-container h3 {
+  text-align: center;
+  color: #fff;
+  margin-bottom: 10px;
+}
+.ranking h3 {
+  text-align: center;
+  margin-bottom: 10px;
+}

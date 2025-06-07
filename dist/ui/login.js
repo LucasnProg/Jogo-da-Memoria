@@ -38,6 +38,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const tag = document.getElementById('tag').value;
         const login = yield contatarServidor(nick, tag);
         if (login) {
+            localStorage.setItem('nick', nick);
+            localStorage.setItem('tag', tag);
             alert('Seja bem vindo!');
             window.location.href = "/main/main-menu.html";
         }

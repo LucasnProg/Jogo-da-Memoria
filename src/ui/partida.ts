@@ -19,6 +19,8 @@ const cartasImagensExtremo = ["ts.png", "ts.png", "ts.png", "ts.png",
 const cartasEspeciais = ["ouro.png", "prata.png", "prata.png", "bronze.png", "bronze.png", "bronze.png"];
 
 const imgPath = "/src/";
+const nick = localStorage.getItem('nick');
+const tag = localStorage.getItem('tag');
 const data_hora = new Date();
 const hora_partida = data_hora.toLocaleTimeString();
 const data_partida = data_hora.toLocaleDateString();
@@ -184,13 +186,16 @@ function verificarFimDaPartida(): void {
   if (todasCartas.length === (cartasViradasAgora.length + 3)) {
     clearInterval(intervalo);
     intervalo = undefined;
-    const modoPeso = modo === "Competitivo" ? 3 : modo === "Cooperativo" ? 1.5 : 0;
-    const dificuldadePeso = dificuldade === "facil" ? 1.5 : dificuldade === "medio" ? 2 : dificuldade === "dificil" ? 2.5 : dificuldade === "extremo" ? 2 : 0;
-    const pontos = ((paresCertosJogador * dificuldadePeso * modoPeso) / (1 + (tempo / numJogadas))) * 10;
+    const modoPeso = modo === "Competitivo" ? 8 : modo === "Cooperativo" ? 5 : 0;
+    const dificuldadePeso = dificuldade === "facil" ? 4 : dificuldade === "medio" ? 6 : dificuldade === "dificil" ? 8 : dificuldade === "extremo" ? 10 : 0;
+    let pontos = ((paresCertosJogador * dificuldadePeso * modoPeso) / (1 + (tempo / jogadas))) * 10;
+    const duracao = document.getElementById("cronometro")?.textContent;
     if (modo === "Competitivo") {
+      const duracao = document.getElementById("cronometro")?.textContent?.toString();
       if (paresCertosJogador > paresCertosMaquina) {
+        enviarRegistroPartida(nick, tag, dificuldade, modo, Number(pontos.toFixed(2)), duracao, data_partida, hora_partida);
         setTimeout(() => {
-          if (confirm(`Parabéns, você ganhou!\n\nSua pontuação foi: ${pontos}\n\nDeseja jogar novamente, neste modo e dificuldade?`)) {
+          if (confirm(`Parabéns, você ganhou!\n\nSua pontuação foi: ${Number(pontos.toFixed(2))}\n\nDeseja jogar novamente, neste modo e dificuldade?`)) {
             location.reload();
           } else {
             window.location.href = "/main/main-menu.html"
@@ -214,9 +219,12 @@ function verificarFimDaPartida(): void {
         }, 1000);
       }
     } else {
+      let pontos = (((paresCertosJogador + paresCertosMaquina) * dificuldadePeso * modoPeso) / (1 + (jogadas / tempo))) * 10;
       if (tempo > 0) {
+
+        enviarRegistroPartida(nick, tag, dificuldade, "Cooperativo", Number(pontos.toFixed(2)), getDuracaoCoop(), data_partida, hora_partida);
         setTimeout(() => {
-          if (confirm(`Parabéns, vocês ganharam!\n\nSua pontuação foi: ${pontos}\n\nDeseja jogar novamente, neste modo e dificuldade?`)) {
+          if (confirm(`Parabéns, vocês ganharam!\n\nSua pontuação foi: ${Number(pontos.toFixed(2))}\n\nDeseja jogar novamente, neste modo e dificuldade?`)) {
             location.reload();
           } else {
             window.location.href = "/main/main-menu.html"
@@ -291,10 +299,7 @@ function jogadaModoExtremo(cartas: HTMLElement[]): void {
       'url("/src/ruby.png")': 3,
       'url("/src/csharp.png")': 3,
       'url("/src/js.png")': 2,
-      'url("/src/c++.png")': 2,
-      'url("/src/ouro.png")': 1,
-      'url("/src/prata.png")': 1,
-      'url("/src/bronze.png")': 1
+      'url("/src/c++.png")': 2
     }
 
     const frequencias: Record<string, number> = {};
@@ -303,47 +308,45 @@ function jogadaModoExtremo(cartas: HTMLElement[]): void {
     }
 
     for (const img in frequencias) {
-      if (frequencias[img] === modoExtremoGabarito[img]) {
-        if (img === 'url("/src/ouro.png")') {
-          setTimeout(() => {
-            cartasViradas.forEach(carta => {
-              if ((carta.querySelector(".carta-frente") as HTMLElement).style.backgroundImage == img) {
-                setTimeout(() => { carta.classList.add("fixada"); }, 500);
-              }
-            });
-            alert(`Você encontrou uma carta especial dourada, que sorte grande!\n\nUm conjunto de cartas será revelado para você!`)
-          }, 1000);
-          poderCartaDourada();
-
-        } else if (img === 'url("/src/prata.png")') {
-          setTimeout(() => {
-            cartasViradas.forEach(carta => {
-              if ((carta.querySelector(".carta-frente") as HTMLElement).style.backgroundImage == img) {
-                setTimeout(() => { carta.classList.add("fixada"); }, 500);
-              }
-            });
-            alert(`Você encontrou uma carta especial prateada, que sorte!\n\nVocê podera jogar 2 vezes seguidas!`)
-          }, 1000);
-          vezDoJogador = true;
-        } else if (img === 'url("/src/bronze.png")') {
-          setTimeout(() => {
-            cartasViradas.forEach(carta => {
-              if ((carta.querySelector(".carta-frente") as HTMLElement).style.backgroundImage == img) {
-                setTimeout(() => { carta.classList.add("fixada"); }, 500);
-              }
-            });
-            alert(`Você encontrou uma carta especial bronzeada, que sorte!\n\nVocê terá seu cronometro e contador de jogadas pausado na proxima rodada!`)
-          }, 1000);
-          cartaPausar = true;
-        } else {
+      if (img === 'url("/src/ouro.png")') {
+        setTimeout(() => {
           cartas.forEach(carta => {
-            if ((carta.querySelector(".carta-frente") as HTMLElement).style.backgroundImage != img) {
-              setTimeout(() => { carta.classList.remove("virada"); }, 500);
+            if ((carta.querySelector(".carta-frente") as HTMLElement).style.backgroundImage == img) {
+              setTimeout(() => { carta.classList.add("fixada"); }, 500);
             }
-          })
-          paresCertosJogador++;
-          atualizarPlacar();
-        }
+          });
+          alert(`Você encontrou uma carta especial dourada, que sorte grande!\n\nUm conjunto de cartas será revelado para você!`)
+        }, 1000);
+        poderCartaDourada();
+
+      } else if (img === 'url("/src/prata.png")') {
+        setTimeout(() => {
+          cartas.forEach(carta => {
+            if ((carta.querySelector(".carta-frente") as HTMLElement).style.backgroundImage == img) {
+              setTimeout(() => { carta.classList.add("fixada"); }, 500);
+            }
+          });
+          alert(`Você encontrou uma carta especial prateada, que sorte!\n\nVocê podera jogar 2 vezes seguidas!`)
+        }, 1000);
+        vezDoJogador = true;
+      } else if (img === 'url("/src/bronze.png")') {
+        setTimeout(() => {
+          cartas.forEach(carta => {
+            if ((carta.querySelector(".carta-frente") as HTMLElement).style.backgroundImage == img) {
+              setTimeout(() => { carta.classList.add("fixada"); }, 500);
+            }
+          });
+          alert(`Você encontrou uma carta especial bronzeada, que sorte!\n\nVocê terá seu cronometro e contador de jogadas pausado na proxima rodada!`)
+        }, 1000);
+        cartaPausar = true;
+      } else if (frequencias[img] === modoExtremoGabarito[img]) {
+        cartas.forEach(carta => {
+          if ((carta.querySelector(".carta-frente") as HTMLElement).style.backgroundImage != img) {
+            setTimeout(() => { carta.classList.remove("virada"); }, 500);
+          }
+        })
+        paresCertosJogador++;
+        atualizarPlacar();
       } else {
         cartasViradas.forEach(carta => {
           if ((carta.querySelector(".carta-frente") as HTMLElement).style.backgroundImage == img) {
@@ -353,7 +356,6 @@ function jogadaModoExtremo(cartas: HTMLElement[]): void {
       }
     }
   }
-
 }
 
 function getTabuleiroGabarito(): HTMLElement[][] {
@@ -435,6 +437,7 @@ function poderCartaDourada(): void {
 
   paresCertosJogador++;
   atualizarPlacar();
+  verificarFimDaPartida();
 }
 
 function iniciarPartida(): void {
@@ -519,7 +522,7 @@ function iniciarPartida(): void {
         }
         if (dificuldade === "extremo") {
           jogadaModoExtremo(cartasViradas);
-          setTimeout(() => { }, 500);
+
           cartasViradas = [];
           verificarFimDaPartida();
         } else {
@@ -535,7 +538,7 @@ function iniciarPartida(): void {
             }, 1000);
           }
         }
-      
+
         if (!vezDoJogador) {
           setTimeout(() => {
             JogadaMaquina();
@@ -543,6 +546,12 @@ function iniciarPartida(): void {
         } else if (!cartaPausar && modo === "Competitivo") {
           iniciarCronometro();
         }
+      } else if (dificuldade === "extremo" && todasCartasViradas()) {
+        cartasViradas = [];
+        paresCertosJogador++;
+        atualizarPlacar();
+        verificarFimDaPartida();
+        vezDoJogador = false;
       }
       if (modo === "Competitivo" && paresCertosJogador === 3 && !dicaUsada) {
         botaoDica.disabled = false;
@@ -735,7 +744,7 @@ async function JogadaMaquina(): Promise<void> {
   if (modo === "Cooperativo") {
     if (cartaPausar) {
       pausarCronometro();
-    } 
+    }
   }
   let efetuarJogada = true;
   if (dificuldade != "extremo") {
@@ -811,6 +820,13 @@ async function JogadaMaquina(): Promise<void> {
           efetuarJogada = false;
         }
       }
+      if (todasCartasViradas()) {
+        cartasViradasMaquina = [];
+        paresCertosMaquina++;
+        atualizarPlacar();
+        verificarFimDaPartida();
+        efetuarJogada = false;
+      }
     } while (efetuarJogada === true);
   }
   atualizarMemoriaJogadasMaquina();
@@ -827,6 +843,78 @@ function delay(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+async function enviarRegistroPartida(nick: string | null, tag: string | null, dificuldade: string | null, modo: string, pontos: number, duracao: string | undefined, data: string, hora: string): Promise<void> {
+  try {
+    const resposta = await fetch("http://localhost:3000/registrar-partida", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ nick, tag, dificuldade, modo, pontos, duracao, data, hora })
+    });
+
+    const resultado = await resposta.json();
+
+    if (resposta.ok) {
+      console.log("Registrado com sucesso!", resultado.message);
+    } else {
+      console.warn("Erro ao registrar", resultado.message);
+    }
+  } catch (erro) {
+    console.error("Erro na requisição:", erro);
+  }
+}
+
+function todasCartasViradas(): boolean {
+  for (let linha of tabuleiroGabarito) {
+    for (let carta of linha) {
+      if (!carta.classList.contains("virada") && !carta.classList.contains("fixada")) {
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
+function getDuracaoCoop(): string | undefined {
+  let tempoInicial: number = 0;
+  if (dificuldade === "facil") {
+    tempoInicial = 300;
+  } else if (dificuldade === "medio") {
+    tempoInicial = 240;
+  } else if (dificuldade === "dificil") {
+    tempoInicial = 180;
+  } else if (dificuldade === "extremo") {
+    tempoInicial = 150;
+  }
+
+  const duracao = document.getElementById("cronometro")?.textContent?.toString();
+
+  let duracaoFinal = "";
+
+  if (duracao) {
+    const [minutosStr, segundosStr] = duracao.split(':');
+    const minutos = parseInt(minutosStr);
+    const segundos = parseInt(segundosStr);
+
+    const duracaoEmSegundos = minutos * 60 + segundos;
+
+    let segundosRestantes = tempoInicial - duracaoEmSegundos;
+
+    if (segundosRestantes < 0) segundosRestantes = 0;
+
+    const minutosFinal = Math.floor(segundosRestantes / 60);
+    const segundosFinal = segundosRestantes % 60;
+
+    const minutosFormatados = minutosFinal.toString().padStart(2, '0');
+    const segundosFormatados = segundosFinal.toString().padStart(2, '0');
+
+    duracaoFinal = `${minutosFormatados}:${segundosFormatados}`;
+
+    return duracaoFinal;
+  }
+
+}
 iniciarPartida();
 const tabuleiroGabarito = getTabuleiroGabarito();
 

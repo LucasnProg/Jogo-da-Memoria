@@ -19,25 +19,34 @@ app.use(express_1.default.static(publicPath));
 app.get('/', (req, res) => {
     res.sendFile(path_1.default.join(publicPath, 'index.html'));
 });
-/*
-app.post('/cadastro', (req: Request , res: Response)=> {
-  const { nome, email, senha } = req.body;
-
-  if (verificarJogadorExiste(email, nome)) {
-    return res.status(409).json({ message: 'Jogador já existe' });
-  }
-
-  adicionarJogador(nome, email, senha);
-  return res.status(201).json({ message: 'Cadastro realizado com sucesso!' });
-});*/
 app.post('/iniciar', (req, res) => {
     const { nick, tag } = req.body;
     if ((0, dbManager_1.verificarJogadorExiste)(nick, tag)) {
         return res.status(409).json({ message: 'Essa tag, não está mais disponível para esse nome de jogador!' });
     }
     else {
-        (0, dbManager_1.iniciarJogador)(nick, tag);
-        return res.status(201).json({ message: 'nick, inserido com sucesso!' });
+        return res.status(201).json({ message: 'nick, armazenado com sucesso!' });
+    }
+});
+app.post('/registrar-partida', (req, res) => {
+    const { nick, tag, dificuldade, modo, pontos, duracao, data, hora } = req.body;
+    try {
+        (0, dbManager_1.registrarPartida)(nick, tag, dificuldade, modo, pontos, duracao, data, hora);
+        res.status(201).json({ message: 'Partida registrada com sucesso!' });
+    }
+    catch (error) {
+        console.error('Erro ao registrar partida:', error);
+        res.status(500).json({ message: 'Erro interno ao registrar partida.' });
+    }
+});
+app.get('/ranking', (req, res) => {
+    try {
+        const partidas = (0, dbManager_1.getPartidas)();
+        res.status(200).json(partidas);
+    }
+    catch (error) {
+        console.error('Erro ao obter partidas:', error);
+        res.status(500).json({ message: 'Erro ao buscar partidas.' });
     }
 });
 app.listen(PORT, () => {
