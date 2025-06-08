@@ -36,11 +36,11 @@ function criarTabela(titulo, partidasModo) {
       <tr>
         <th>Tag</th>
         <th>Jogador</th>
-        <th>Pontuação</th>
+        <th>Pontos</th>
         <th>Dificuldade</th>
-        <th>Modo</th>
         <th>Duração</th>
-        <th>Data/Hora</th>
+        <th>Data</th>
+        <th>Hora</th>
       </tr>
     </thead>
     <tbody></tbody>
@@ -62,19 +62,19 @@ function criarLinhaTabela(partida) {
     pontuacaoCell.textContent = partida.pontuacao.toString();
     const dificuldadeCell = document.createElement('td');
     dificuldadeCell.textContent = partida.dificuldade;
-    const modoCell = document.createElement('td');
-    modoCell.textContent = partida.modo;
     const duracaoCell = document.createElement('td');
     duracaoCell.textContent = partida.duracao;
-    const dataHoraCell = document.createElement('td');
-    dataHoraCell.textContent = `${partida.data} ${partida.hora}`;
+    const dataCell = document.createElement('td');
+    dataCell.textContent = `${partida.data}`;
+    const horaCell = document.createElement('td');
+    horaCell.textContent = `${partida.hora}`;
     linha.appendChild(tagCell);
     linha.appendChild(nomeCell);
     linha.appendChild(pontuacaoCell);
     linha.appendChild(dificuldadeCell);
-    linha.appendChild(modoCell);
     linha.appendChild(duracaoCell);
-    linha.appendChild(dataHoraCell);
+    linha.appendChild(dataCell);
+    linha.appendChild(horaCell);
     return linha;
 }
 document.addEventListener('DOMContentLoaded', () => __awaiter(void 0, void 0, void 0, function* () {

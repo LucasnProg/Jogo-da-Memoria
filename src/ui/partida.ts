@@ -22,7 +22,7 @@ const imgPath = "/src/";
 const nick = localStorage.getItem('nick');
 const tag = localStorage.getItem('tag');
 const data_hora = new Date();
-const hora_partida = data_hora.toLocaleTimeString();
+const hora_partida = data_hora.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', hour12: false });
 const data_partida = data_hora.toLocaleDateString();
 let jogadas = 0;
 let numRodadas = 0;
@@ -74,8 +74,10 @@ botaoDica.addEventListener("click", () => {
     poderCartaDourada();
     if (modo === "Competitivo") {
       tempo = tempo + 20;
+      atualizarCronometro();
     } else {
       tempo = tempo - 20;
+      atualizarCronometro();
     }
     jogadas = jogadas + 5;
     atualizarNumJogadasInterface();
@@ -180,18 +182,14 @@ function pausarCronometro(): void {
 }
 
 function verificarFimDaPartida(): void {
-  const todasCartas = document.querySelectorAll(".carta");
-  const cartasViradasAgora = document.querySelectorAll(".carta.virada");
-
-  if (todasCartas.length === (cartasViradasAgora.length + 3)) {
+  if (todasCartasViradas()) {
     clearInterval(intervalo);
     intervalo = undefined;
-    const modoPeso = modo === "Competitivo" ? 8 : modo === "Cooperativo" ? 5 : 0;
+    const modoPeso = modo === "Competitivo" ? 8 : modo === "Cooperativo" ? 4 : 0;
     const dificuldadePeso = dificuldade === "facil" ? 4 : dificuldade === "medio" ? 6 : dificuldade === "dificil" ? 8 : dificuldade === "extremo" ? 10 : 0;
-    let pontos = ((paresCertosJogador * dificuldadePeso * modoPeso) / (1 + (tempo / jogadas))) * 10;
-    const duracao = document.getElementById("cronometro")?.textContent;
+    const duracao = document.getElementById("cronometro")?.textContent?.toString();
     if (modo === "Competitivo") {
-      const duracao = document.getElementById("cronometro")?.textContent?.toString();
+      let pontos = ((paresCertosJogador * dificuldadePeso * modoPeso) / (1 + (tempo / jogadas)));
       if (paresCertosJogador > paresCertosMaquina) {
         enviarRegistroPartida(nick, tag, dificuldade, modo, Number(pontos.toFixed(2)), duracao, data_partida, hora_partida);
         setTimeout(() => {
@@ -219,9 +217,8 @@ function verificarFimDaPartida(): void {
         }, 1000);
       }
     } else {
-      let pontos = (((paresCertosJogador + paresCertosMaquina) * dificuldadePeso * modoPeso) / (1 + (jogadas / tempo))) * 10;
+      let pontos = (((paresCertosJogador + paresCertosMaquina) * dificuldadePeso * modoPeso) / (1 + (jogadas / tempo)));
       if (tempo > 0) {
-
         enviarRegistroPartida(nick, tag, dificuldade, "Cooperativo", Number(pontos.toFixed(2)), getDuracaoCoop(), data_partida, hora_partida);
         setTimeout(() => {
           if (confirm(`Parabéns, vocês ganharam!\n\nSua pontuação foi: ${Number(pontos.toFixed(2))}\n\nDeseja jogar novamente, neste modo e dificuldade?`)) {
@@ -712,30 +709,25 @@ function VerificarCartasViradasExtremo(cartas: HTMLElement[]): boolean {
       'url("/src/js.png")': 2,
       'url("/src/c++.png")': 2
     }
-
+    let encontrouConjunto = false;
     const frequencias: Record<string, number> = {};
     for (const img of imagens) {
       frequencias[img] = (frequencias[img] || 0) + 1;
     }
 
     for (const img in frequencias) {
-      if (frequencias[img] === modoExtremoGabarito[img]) {
+      if (frequencias[img] != modoExtremoGabarito[img]) {
         cartas.forEach(carta => {
-          if ((carta.querySelector(".carta-frente") as HTMLElement).style.backgroundImage != img) {
+          if ((carta.querySelector(".carta-frente") as HTMLElement).style.backgroundImage === img) {
             setTimeout(() => { carta.classList.remove("virada"); }, 500);
           }
         })
-        return true;
       } else {
-        cartas.forEach(carta => {
-          if ((carta.querySelector(".carta-frente") as HTMLElement).style.backgroundImage == img) {
-            setTimeout(() => { carta.classList.remove("virada"); }, 500);
-          }
-        })
+        encontrouConjunto = true;
       }
     }
 
-    return false;
+    return encontrouConjunto;
   }
 }
 
@@ -757,7 +749,6 @@ async function JogadaMaquina(): Promise<void> {
         !verificaEspecial(tabuleiroGabarito[linha][coluna])
       ) {
         if (modo === "Cooperativo") {
-          jogadas++;
           atualizarNumJogadasInterface();
         }
         tabuleiroGabarito[linha][coluna].classList.add("virada");
@@ -794,7 +785,6 @@ async function JogadaMaquina(): Promise<void> {
         !verificaEspecial(tabuleiroGabarito[linha][coluna])
       ) {
         if (modo === "Cooperativo") {
-          jogadas++;
           atualizarNumJogadasInterface();
         }
         tabuleiroGabarito[linha][coluna].classList.add("virada");
@@ -868,7 +858,7 @@ async function enviarRegistroPartida(nick: string | null, tag: string | null, di
 function todasCartasViradas(): boolean {
   for (let linha of tabuleiroGabarito) {
     for (let carta of linha) {
-      if (!carta.classList.contains("virada") && !carta.classList.contains("fixada")) {
+      if (!carta.classList.contains("virada") && !carta.classList.contains("fixada") && !verificaEspecial(carta)) {
         return false;
       }
     }

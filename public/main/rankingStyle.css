@@ -3,8 +3,6 @@ body {
   font-family: Helvetica, Arial, sans-serif;
   height: 100vh;
   text-align: center;
-  overflow-y: hidden;
-
   background: #93d4ed;
   background: linear-gradient(90deg, rgba(147, 212, 237, 1) 0%, rgba(87, 199, 133, 1) 50%, rgba(237, 221, 83, 1) 100%);
   ;
@@ -39,7 +37,7 @@ body {
   color: #fff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   text-align: left;
-  height: 480px;
+  height: 550px;
   display: flex;
   flex-direction: column;
 }
@@ -96,3 +94,31 @@ body {
   text-align: center;
   margin-bottom: 10px;
 }
+
+
+table {
+  width: 100%;
+  table-layout: auto; 
+  border-collapse: collapse;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+th, td {
+  padding: 8px 10px;
+  white-space: normal;        
+  overflow: visible;         
+  text-overflow: unset;       
+  vertical-align: middle;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+td:nth-child(1) { width: auto; }
+td:nth-child(2) { width: auto; }
+td:nth-child(3) { width: auto; }
+td:nth-child(4) { width: auto; }
+td:nth-child(5) { width: auto; }
+td:nth-child(6) { width: auto; }
+td:nth-child(7) { width: auto; }
+
+

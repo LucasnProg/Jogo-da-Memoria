@@ -26,7 +26,7 @@ const imgPath = "/src/";
 const nick = localStorage.getItem('nick');
 const tag = localStorage.getItem('tag');
 const data_hora = new Date();
-const hora_partida = data_hora.toLocaleTimeString();
+const hora_partida = data_hora.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', hour12: false });
 const data_partida = data_hora.toLocaleDateString();
 let jogadas = 0;
 let numRodadas = 0;
@@ -72,9 +72,11 @@ botaoDica.addEventListener("click", () => {
         poderCartaDourada();
         if (modo === "Competitivo") {
             tempo = tempo + 20;
+            atualizarCronometro();
         }
         else {
             tempo = tempo - 20;
+            atualizarCronometro();
         }
         jogadas = jogadas + 5;
         atualizarNumJogadasInterface();
@@ -178,18 +180,15 @@ function pausarCronometro() {
     intervalo = undefined;
 }
 function verificarFimDaPartida() {
-    var _a, _b, _c;
-    const todasCartas = document.querySelectorAll(".carta");
-    const cartasViradasAgora = document.querySelectorAll(".carta.virada");
-    if (todasCartas.length === (cartasViradasAgora.length + 3)) {
+    var _a, _b;
+    if (todasCartasViradas()) {
         clearInterval(intervalo);
         intervalo = undefined;
-        const modoPeso = modo === "Competitivo" ? 8 : modo === "Cooperativo" ? 5 : 0;
+        const modoPeso = modo === "Competitivo" ? 8 : modo === "Cooperativo" ? 4 : 0;
         const dificuldadePeso = dificuldade === "facil" ? 4 : dificuldade === "medio" ? 6 : dificuldade === "dificil" ? 8 : dificuldade === "extremo" ? 10 : 0;
-        let pontos = ((paresCertosJogador * dificuldadePeso * modoPeso) / (1 + (tempo / jogadas))) * 10;
-        const duracao = (_a = document.getElementById("cronometro")) === null || _a === void 0 ? void 0 : _a.textContent;
+        const duracao = (_b = (_a = document.getElementById("cronometro")) === null || _a === void 0 ? void 0 : _a.textContent) === null || _b === void 0 ? void 0 : _b.toString();
         if (modo === "Competitivo") {
-            const duracao = (_c = (_b = document.getElementById("cronometro")) === null || _b === void 0 ? void 0 : _b.textContent) === null || _c === void 0 ? void 0 : _c.toString();
+            let pontos = ((paresCertosJogador * dificuldadePeso * modoPeso) / (1 + (tempo / jogadas)));
             if (paresCertosJogador > paresCertosMaquina) {
                 enviarRegistroPartida(nick, tag, dificuldade, modo, Number(pontos.toFixed(2)), duracao, data_partida, hora_partida);
                 setTimeout(() => {
@@ -223,7 +222,7 @@ function verificarFimDaPartida() {
             }
         }
         else {
-            let pontos = (((paresCertosJogador + paresCertosMaquina) * dificuldadePeso * modoPeso) / (1 + (jogadas / tempo))) * 10;
+            let pontos = (((paresCertosJogador + paresCertosMaquina) * dificuldadePeso * modoPeso) / (1 + (jogadas / tempo)));
             if (tempo > 0) {
                 enviarRegistroPartida(nick, tag, dificuldade, "Cooperativo", Number(pontos.toFixed(2)), getDuracaoCoop(), data_partida, hora_partida);
                 setTimeout(() => {
@@ -668,28 +667,24 @@ function VerificarCartasViradasExtremo(cartas) {
             'url("/src/js.png")': 2,
             'url("/src/c++.png")': 2
         };
+        let encontrouConjunto = false;
         const frequencias = {};
         for (const img of imagens) {
             frequencias[img] = (frequencias[img] || 0) + 1;
         }
         for (const img in frequencias) {
-            if (frequencias[img] === modoExtremoGabarito[img]) {
+            if (frequencias[img] != modoExtremoGabarito[img]) {
                 cartas.forEach(carta => {
-                    if (carta.querySelector(".carta-frente").style.backgroundImage != img) {
+                    if (carta.querySelector(".carta-frente").style.backgroundImage === img) {
                         setTimeout(() => { carta.classList.remove("virada"); }, 500);
                     }
                 });
-                return true;
             }
             else {
-                cartas.forEach(carta => {
-                    if (carta.querySelector(".carta-frente").style.backgroundImage == img) {
-                        setTimeout(() => { carta.classList.remove("virada"); }, 500);
-                    }
-                });
+                encontrouConjunto = true;
             }
         }
-        return false;
+        return encontrouConjunto;
     }
 }
 function JogadaMaquina() {
@@ -710,7 +705,6 @@ function JogadaMaquina() {
                     !tabuleiroGabarito[linha][coluna].classList.contains("fixada") &&
                     !verificaEspecial(tabuleiroGabarito[linha][coluna])) {
                     if (modo === "Cooperativo") {
-                        jogadas++;
                         atualizarNumJogadasInterface();
                     }
                     tabuleiroGabarito[linha][coluna].classList.add("virada");
@@ -747,7 +741,6 @@ function JogadaMaquina() {
                     !tabuleiroGabarito[linha][coluna].classList.contains("fixada") &&
                     !verificaEspecial(tabuleiroGabarito[linha][coluna])) {
                     if (modo === "Cooperativo") {
-                        jogadas++;
                         atualizarNumJogadasInterface();
                     }
                     tabuleiroGabarito[linha][coluna].classList.add("virada");
@@ -819,7 +812,7 @@ function enviarRegistroPartida(nick, tag, dificuldade, modo, pontos, duracao, da
 function todasCartasViradas() {
     for (let linha of tabuleiroGabarito) {
         for (let carta of linha) {
-            if (!carta.classList.contains("virada") && !carta.classList.contains("fixada")) {
+            if (!carta.classList.contains("virada") && !carta.classList.contains("fixada") && !verificaEspecial(carta)) {
                 return false;
             }
         }
