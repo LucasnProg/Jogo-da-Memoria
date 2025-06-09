@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 const cartasContainer = document.getElementById("cartas");
+//Problema da carta dourada no modo dificil
 const cartasImagensFacil = ["c.png", "csharp.png", "c++.png", "java.png",
     "js.png", "kotlin.png", "lua.png", "php.png", "python.png",
     "r.png", "ruby.png", "ts.png"];
@@ -185,7 +186,7 @@ function verificarFimDaPartida() {
         clearInterval(intervalo);
         intervalo = undefined;
         const modoPeso = modo === "Competitivo" ? 8 : modo === "Cooperativo" ? 4 : 0;
-        const dificuldadePeso = dificuldade === "facil" ? 4 : dificuldade === "medio" ? 6 : dificuldade === "dificil" ? 8 : dificuldade === "extremo" ? 10 : 0;
+        const dificuldadePeso = dificuldade === "facil" ? 4 : dificuldade === "medio" ? 6 : dificuldade === "dificil" ? 10 : dificuldade === "extremo" ? 12 : 0;
         const duracao = (_b = (_a = document.getElementById("cronometro")) === null || _a === void 0 ? void 0 : _a.textContent) === null || _b === void 0 ? void 0 : _b.toString();
         if (modo === "Competitivo") {
             let pontos = ((paresCertosJogador * dificuldadePeso * modoPeso) / (1 + (tempo / jogadas)));
@@ -417,7 +418,10 @@ function poderCartaDourada() {
         return;
     const grupoEscolhido = gruposValidos[Math.floor(Math.random() * gruposValidos.length)];
     grupoEscolhido.forEach(carta => {
-        carta.classList.add("virada");
+        if (!carta.classList.contains("virada")) {
+            carta.classList.add("virada");
+        }
+        carta.classList.add("fixada");
     });
     paresCertosJogador++;
     atualizarPlacar();
@@ -740,7 +744,7 @@ function JogadaMaquina() {
                 if (!tabuleiroGabarito[linha][coluna].classList.contains("virada") &&
                     !tabuleiroGabarito[linha][coluna].classList.contains("fixada") &&
                     !verificaEspecial(tabuleiroGabarito[linha][coluna])) {
-                    if (modo === "Cooperativo") {
+                    if (modo === "Cooperativo" && !cartaPausar) {
                         atualizarNumJogadasInterface();
                     }
                     tabuleiroGabarito[linha][coluna].classList.add("virada");

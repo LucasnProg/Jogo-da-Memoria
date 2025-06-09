@@ -186,7 +186,7 @@ function verificarFimDaPartida(): void {
     clearInterval(intervalo);
     intervalo = undefined;
     const modoPeso = modo === "Competitivo" ? 8 : modo === "Cooperativo" ? 4 : 0;
-    const dificuldadePeso = dificuldade === "facil" ? 4 : dificuldade === "medio" ? 6 : dificuldade === "dificil" ? 8 : dificuldade === "extremo" ? 10 : 0;
+    const dificuldadePeso = dificuldade === "facil" ? 4 : dificuldade === "medio" ? 6 : dificuldade === "dificil" ? 10 : dificuldade === "extremo" ? 12 : 0;
     const duracao = document.getElementById("cronometro")?.textContent?.toString();
     if (modo === "Competitivo") {
       let pontos = ((paresCertosJogador * dificuldadePeso * modoPeso) / (1 + (tempo / jogadas)));
@@ -429,7 +429,10 @@ function poderCartaDourada(): void {
   const grupoEscolhido = gruposValidos[Math.floor(Math.random() * gruposValidos.length)];
 
   grupoEscolhido.forEach(carta => {
-    carta.classList.add("virada");
+    if (!carta.classList.contains("virada")) {
+      carta.classList.add("virada");
+    }
+    carta.classList.add("fixada");
   });
 
   paresCertosJogador++;
@@ -784,7 +787,7 @@ async function JogadaMaquina(): Promise<void> {
         !tabuleiroGabarito[linha][coluna].classList.contains("fixada") &&
         !verificaEspecial(tabuleiroGabarito[linha][coluna])
       ) {
-        if (modo === "Cooperativo") {
+        if (modo === "Cooperativo" && !cartaPausar) {
           atualizarNumJogadasInterface();
         }
         tabuleiroGabarito[linha][coluna].classList.add("virada");
