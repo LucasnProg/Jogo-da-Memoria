@@ -9,7 +9,7 @@ interface Partida {
   data : string,
   hora: string
 }
-//Corrigir o banco de dados e usar 2 tabelas
+
 
 const db = new Database('jogoDaMemoria.db');
 function iniciarDataBase():void{
@@ -52,7 +52,3 @@ function verificarJogadorExiste(nick: string,tag: string): boolean {
 iniciarDataBase();
 
 export {registrarPartida, getPartidas, verificarJogadorExiste, iniciarDataBase, iniciarJogador};
-//db.prepare('INSERT INTO players (name) VALUES (?)').run('Lucas');
-
-//const players = db.prepare('SELECT * FROM players').all();
-//console.log(players);
