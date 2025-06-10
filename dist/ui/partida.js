@@ -9,7 +9,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 const cartasContainer = document.getElementById("cartas");
-//Problema da carta dourada no modo dificil
 const cartasImagensFacil = ["c.png", "csharp.png", "c++.png", "java.png",
     "js.png", "kotlin.png", "lua.png", "php.png", "python.png",
     "r.png", "ruby.png", "ts.png"];
@@ -708,7 +707,7 @@ function JogadaMaquina() {
                 if (!tabuleiroGabarito[linha][coluna].classList.contains("virada") &&
                     !tabuleiroGabarito[linha][coluna].classList.contains("fixada") &&
                     !verificaEspecial(tabuleiroGabarito[linha][coluna])) {
-                    if (modo === "Cooperativo") {
+                    if (modo === "Cooperativo" && !cartaPausar) {
                         atualizarNumJogadasInterface();
                     }
                     tabuleiroGabarito[linha][coluna].classList.add("virada");

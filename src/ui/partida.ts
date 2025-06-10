@@ -751,7 +751,7 @@ async function JogadaMaquina(): Promise<void> {
         !tabuleiroGabarito[linha][coluna].classList.contains("fixada") &&
         !verificaEspecial(tabuleiroGabarito[linha][coluna])
       ) {
-        if (modo === "Cooperativo") {
+        if (modo === "Cooperativo" && !cartaPausar) {
           atualizarNumJogadasInterface();
         }
         tabuleiroGabarito[linha][coluna].classList.add("virada");

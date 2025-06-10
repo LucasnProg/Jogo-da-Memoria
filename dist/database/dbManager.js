@@ -9,7 +9,6 @@ exports.verificarJogadorExiste = verificarJogadorExiste;
 exports.iniciarDataBase = iniciarDataBase;
 exports.iniciarJogador = iniciarJogador;
 const better_sqlite3_1 = __importDefault(require("better-sqlite3"));
-//Corrigir o banco de dados e usar 2 tabelas
 const db = new better_sqlite3_1.default('jogoDaMemoria.db');
 function iniciarDataBase() {
     db.prepare(`
@@ -42,6 +41,3 @@ function verificarJogadorExiste(nick, tag) {
     return jogador !== undefined;
 }
 iniciarDataBase();
-//db.prepare('INSERT INTO players (name) VALUES (?)').run('Lucas');
-//const players = db.prepare('SELECT * FROM players').all();
-//console.log(players);
